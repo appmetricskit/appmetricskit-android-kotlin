@@ -6,33 +6,22 @@ payloads to your AppMetricsKit ingest endpoint.
 
 ## Installation
 
-When the package is published to Maven Central, add it to your Android app:
+Add Maven Central to your repositories:
 
 ```kotlin
-dependencies {
-    implementation("com.appmetricskit:appmetricskit-android:0.1.0")
-}
-```
-
-Until then, publish it locally from this repository:
-
-```bash
-./gradlew :appmetricskit:publishToMavenLocal
-```
-
-Then add `mavenLocal()` to the consuming app:
-
-```kotlin
+// settings.gradle.kts
 dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        mavenLocal()
     }
 }
 ```
 
+Add AppMetricsKit to your app module:
+
 ```kotlin
+// app/build.gradle.kts
 dependencies {
     implementation("com.appmetricskit:appmetricskit-android:0.1.0")
 }
@@ -323,6 +312,27 @@ Publish to your local Maven cache:
 
 ```bash
 ./gradlew :appmetricskit:publishToMavenLocal
+```
+
+To test an unpublished local build in another Android app, add `mavenLocal()`
+before Maven Central in that app's repositories:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        google()
+        mavenCentral()
+    }
+}
+```
+
+Then depend on the local artifact:
+
+```kotlin
+dependencies {
+    implementation("com.appmetricskit:appmetricskit-android:0.1.0")
+}
 ```
 
 The SDK has no runtime third-party dependencies.
